@@ -1,0 +1,31 @@
+.main-container {
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+.character-card-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow-x: auto; 
+}
+
+.character-card {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-right: 16px;
+  width: 350px; 
+}
+
+.back-link {
+  color: #1976D2;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.controls-container {
+  margin-top: 20px;
+}
