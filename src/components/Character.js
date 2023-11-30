@@ -56,7 +56,7 @@ const Character = () => {
   };
 
   const goBack = () => {
-    // Add logic to go back
+    
     console.log('Going back...');
   };
 
