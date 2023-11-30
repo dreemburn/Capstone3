@@ -5,9 +5,7 @@
 
 .character-card-container {
   display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  overflow-x: auto; 
+  overflow-x: auto;
 }
 
 .character-card {
@@ -15,8 +13,11 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   margin-right: 16px;
-  width: 350px; 
+  width: 200px; 
+  height: 150px; 
+  padding: 15px;
 }
+
 
 .back-link {
   color: #1976D2;
