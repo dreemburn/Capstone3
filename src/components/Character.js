@@ -20,6 +20,7 @@ const Character = () => {
   const [characters, setCharacters] = useState([]);
   const [page, setPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [previousPage, setPreviousPage] = useState(null);
 
   useEffect(() => {
     const fetchCharacterData = async () => {
@@ -56,8 +57,12 @@ const Character = () => {
   };
 
   const goBack = () => {
-    
-    console.log('Going back...');
+    if (previousPage !== null) {
+      setPage(previousPage);
+      setPreviousPage(null);
+    } else {
+      console.log('Back pressed');
+    }
   };
 
   const NavBar = () => {
@@ -70,6 +75,9 @@ const Character = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Game of Thrones Characters
           </Typography>
+          <Button variant="contained" color="primary" onClick={goBack}>
+          <ArrowBack /> Back
+        </Button>
         </Toolbar>
       </AppBar>
     );
