@@ -1,8 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Container, Grid, Card, CardContent, Typography, TextField } from '@mui/material';
-import { ArrowBack, Male, Female } from '@mui/icons-material';
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  Container,
+  Grid,
+  Card,
+  CardContent,
+  TextField,
+  Button,
+} from '@mui/material';
+import { ArrowBack, Menu } from '@mui/icons-material';
 
 import './Character.css';
 
@@ -12,20 +22,17 @@ const Character = () => {
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
   useEffect(() => {
-    (async () => {
+    const fetchCharacterData = async () => {
       try {
-        const characterData = await fetchCharacterData();
-        setCharacters(characterData);
+        const response = await axios.get(`https://www.anapioficeandfire.com/api/characters?page=${page}&pageSize=${itemsPerPage}`);
+        setCharacters(response.data);
       } catch (error) {
         console.error('Error fetching character data:', error);
       }
-    })();
-  }, [page, itemsPerPage]);
+    };
 
-  const fetchCharacterData = async () => {
-    const response = await axios.get(`https://www.anapioficeandfire.com/api/characters?page=${page}&pageSize=${itemsPerPage}`);
-    return response.data;
-  };
+    fetchCharacterData();
+  }, [page, itemsPerPage]);
 
   const handlePageChange = (e) => {
     setPage(Number(e.target.value));
@@ -36,7 +43,7 @@ const Character = () => {
   };
 
   const getGenderIcon = (gender) => {
-    return gender === 'Male' ? <Male /> : <Female />;
+    return gender === 'Male' ? '♂' : '♀';
   };
 
   const getRandomColor = () => {
@@ -48,6 +55,26 @@ const Character = () => {
     return color;
   };
 
+  const goBack = () => {
+    // Add logic to go back
+    console.log('Going back...');
+  };
+
+  const NavBar = () => {
+    return (
+      <AppBar position="static" sx={{ flexGrow: 1 }}>
+        <Toolbar>
+          <IconButton size="large" edge="start" color="inherit" aria-label="menu">
+            <Menu />
+          </IconButton>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            Game of Thrones Characters
+          </Typography>
+        </Toolbar>
+      </AppBar>
+    );
+  };
+
   const renderCharacterCard = (character, index) => (
     <Card key={character.url} className="character-card" style={{ backgroundColor: getRandomColor() }}>
       <CardContent>
@@ -55,8 +82,7 @@ const Character = () => {
           {character.name || 'No Name'}
         </Typography>
         <Typography color="text.secondary" gutterBottom>
-          Gender: {character.gender}
-          {getGenderIcon(character.gender)}
+          Gender: {getGenderIcon(character.gender)}
         </Typography>
         <Typography color="text.secondary" gutterBottom>
           Culture: {character.culture}
@@ -99,9 +125,7 @@ const Character = () => {
 
   return (
     <>
-      <Link to="/" className="back-link">
-        <ArrowBack /> Back
-      </Link>
+      <NavBar />
       <Container className="main-container">
         <Grid container spacing={2}>
           {characters.map((character, index) => (
@@ -136,6 +160,9 @@ const Character = () => {
             />
           </Grid>
         </Grid>
+        <Button variant="contained" color="primary" onClick={goBack}>
+          <ArrowBack /> Back
+        </Button>
       </Container>
     </>
   );
